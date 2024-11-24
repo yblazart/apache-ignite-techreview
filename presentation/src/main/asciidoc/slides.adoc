@@ -1,0 +1,116 @@
+
+:description: What is Apache Ignite
+:copyright: Sciam.fr : Yann Blazart
+:data-uri:
+:sectids!:
+:includegifs:
+:toc2:
+:sectanchors:
+:idprefix:
+:idseparator: -
+:icons: font
+:source-highlighter: highlight.js
+:source-language: java
+:macros-on: subs="macros"
+:imagesdir: ../resources/images
+:hide-uri-scheme:
+:revealjs_theme: beige
+:revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js@5.1.0
+:revealjs_hash: true
+:revealjs_width: 1500
+:revealjs_center: false
+:docinfo: shared
+
+= Apache Ignite : one hour to discover
+
+image::github-url-qr-code.png[role="pull-right",width="200"]
+https://github.com/yblazart/apache-ignite-techreview
+
+[.columns]
+== Who am I : Yann Blazart
+
+[.column]
+--
+* Code in Java for 25 Years
+* Some contributions to open source (JaxWS/Metro, TomEE, WicketExtJs)
+* One of Founder of Smallrye-LLM (WIP) https://github.com/smallrye/smallrye-llm
+* Currently working in a big Bank as a technical advisor
+* I introduced Quarkus and Apache Ignite to this same big bank
+* Produced some Labs and Conferences to Devoxx FR/BE/MA and Riviera Dev
+* Senior Tech lead at Sciam
+--
+[.notes]
+--
+* Code in Java for 25 Years, started in Microsoft Basic 1.0 on TO8D in 1989
+* Some contributions to open source (JaxWS/Metro, TomEE, WicketExtJs)
+* One of Founder of Smallrye-LLM (WIP) https://github.com/smallrye/smallrye-llm
+* Currently working in a big Bank as a technical advisor.
+* I introduced Quarkus and Apache Ignite to this same big bank
+* Produced some Labs and Conferences to Devoxx FR/BE/MA and Riviera Dev
+* Senior Tech lead at Sciam
+--
+
+[.column.is-one-quarter.has-text-right]
+--
+image::yb.png[role="pull-right",width="200"]
+yann.blazart@sciam.fr
+@yblazart.bsky.social
+--
+
+== And ....
+
+-> Use Apache Ignite since 2018
+
+[.columns]
+== Sciam
+
+[.column]
+* Consulting company
+* In tech, and in behavioral sciences
+* High level experts
+* People around Paris and Toulon
+
+[.column]
+--
+image::sciam.png[role="pull-right",width="200"]
+image::sicam-qr-code.png[role="pull-right",width="200"]
+https://www.sciam.fr
+--
+
+[.notes]
+--
+Sponsoring minute +
+Not only old dev guys +
+We take care of young and promising devs +
+Our speciality to work on very difficult projects +
+Or in difficulty +
+I believe this is the company with the higher concentration of Java Champions by square meter. +
+Sponsoring of events (ParisJUG, devoxxfr riviera dev)
+Start it's own meetup's in paris, and some event in Toulon
+--
+
+
+== Agenda
+
+* icon:clock-o[] It's more than just a Memory grid, or a distributed Db
+* icon:clock-o[] Deployments and Topology
+* icon:clock-o[] The dark sides
+* icon:clock-o[] My use cases
+* icon:clock-o[] Let's code !
+
+
+-> Pay attention : one hour it's short !
+
+[.notes]
+--
+Ignite it's multiple things, compare with contestants as Redis, hadoop, +
+Let see some examples where I used it (as Distributed db and as MS support ) +
+Let's see how it works, short presentation of main functionalities +
+Different deployments topology +
+Now some examples
+--
+
+
+
+include::parts/morethanjustamemorygrid.adoc[]
+include::parts/deploymentsandtopology.adoc[]

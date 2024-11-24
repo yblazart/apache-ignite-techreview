@@ -1,0 +1,242 @@
+
+== More than Just a memory Grid, or a distributed Db
+
+Apache Ignite it's : ....
+
+* First : the open Source version of GridGain Product.
+
+[NOTE.speaker]
+--
+Gridgain is the company that made Ignite and gave it to Apache fondation in 2014
+--
+
+[.columns]
+== More than Just a memory Grid, or a distributed Db: Distributed caches 1/2 (storage)
+
+[.column]
+* Like InfiniSpan, Hazelcast, Redis...
+* JCache provider (JSR 107)
+* Caches can be :
+    - Pure Memory, off Heap or on Heap
+    - Persisted to local file storage with WAL files
+    - Persisted to RDMS or other
+* Data are stored in 'Binary' : you can change parts of object stored without change all object
+
+
+[.column.is-one-quarter.has-text-right]
+--
+image::morethanjustamemorygrid/storage.png[role="pull-right",width="650"]
+--
+
+[NOTE.speaker]
+--
+Off heap: no GC, huge amount of RAM
+Native storage : on overhead, store on file, read when it's needed, restarting is easier
+You can provide your own way to persist (API)
+Warning BinFormat : hierarchy with properties and same name
+--
+
+
+== More than Just a memory Grid, or a distributed Db: Distributed caches 2/2 (distribution)
+
+* Data are spread on multiple nodes, partitioned or replicated, by affinity Keys
+* Data with same affinity Key value go to the same "node" -> collocation
+* Near caches : on simple client also, updated by server nodes.
+
+image::morethanjustamemorygrid/dataPartitioning.png[role="pull-right",width="450"]
+
+
+
+[NOTE.speaker]
+--
+For each cache we can define AffKey (compound by fields)
+Data with same 'affinity hash' will be stored on same nodes (collocation)
+--
+
+[.columns]
+== More than Just a memory Grid, or a distributed Db: SQL
+
+[.column]
+* Like YugaByte DB
+* There is a layer to be able to do SQL over caches
+ - You can have an H2 engine
+ - There is also Apache calcite engine (beta)
+ - Joins are possible (collocated/replicated)
+* JDBC/ODBC driver provided
+* When a client do a request, all nodes compute it and result is reduced
+
+[.column]
+image::morethanjustamemorygrid/db.png[role="pull-right",width="300"]
+image::morethanjustamemorygrid/sqlToCache.png[role="pull-right",width="350"]
+
+[NOTE.speaker]
+--
+Partition/replicated -> Join in sql
+--
+
+[.columns]
+== More than Just a memory Grid, or a distributed Db: Transactions
+
+[.column]
+* ACID and 2PC
+* Compatible with JTA
+* Not on all structures
+
+[.column]
+image::morethanjustamemorygrid/tx.png[role="pull-right",width="450"]
+
+[NOTE.speaker]
+--
+quick
+--
+
+== More than Just a memory Grid, or a distributed Db: Computing 1/3
+
+--
+* Like Hadoop
+* You can send code to Nodes !
+- Broadcast it
+- Or select one or more node
+- Get all results
+
+[source, subs="verbatim,quotes"]
+IgniteCompute compute = ignite.compute();
+for (String word : "Print words on different cluster nodes".split(" ")) {
+    compute.run(() -> System.out.println(word));
+}
+
+--
+[NOTE.speaker]
+--
+You can use lambda or Anonymous classes
+Carefull between Jdk 11 and 17 with Lambda's, class loading
+--
+
+== More than Just a memory Grid, or a distributed Db: Computing 2/3
+
+[source, subs="verbatim,quotes"]
+--
+Ignite ignite = ...
+long newYorkId = 2;
+ignite.compute().affinityRun("City", newYorkId, new IgniteRunnable() {
+  @IgniteInstanceResource Ignite ignite;
+  @Override   public void run() {
+    IgniteCache<BinaryObject, BinaryObject> people = ignite.cache("Person").withKeepBinary();
+    ScanQuery<BinaryObject, BinaryObject> query = new ScanQuery <BinaryObject, BinaryObject>();
+    try (QueryCursor<Cache.Entry<BinaryObject, BinaryObject>> cursor = people.query(query)) {
+      for (Cache.Entry<BinaryObject, BinaryObject> entry : cursor) {
+        BinaryObject personKey = entry.getKey();
+        if (personKey.<Long>field("CITY_ID") == newYorkId) {
+          person = entry.getValue();
+        }
+      }
+    }
+  }
+}
+--
+
+
+== More than Just a memory Grid, or a distributed Db: Computing 3/3
+--
+* Runner,callable, Closure, Timeouts
+* Fine selection of Node where it will be executed
+* Map/Reduce API
+* LoadBalancing
+* Fault Tolerance
+* Scheduling (FIFO or Priority or JobStealing)
+* Collocating Job/Data
+--
+
+
+
+[.columns]
+== More than Just a memory Grid, or a distributed Db: Service
+
+[.column]
+--
+* Can be deployed as Cluster Singleton or Node Singleton
+* Same way to select Nodes where to deploy it
+* Redeployable
+* Loadbalancing, Failover, and so on...
+* Easy to use
+
+[source, subs="verbatim,quotes"]
+MyCounterService counterService = ignite
+  .services()
+  .serviceProxy("myCounterService",MyCounterService.class, false);
+counterService.increment();
+--
+
+[.column]
+image::morethanjustamemorygrid/services.png[role="pull-right",width="450"]
+
+[.columns]
+== More than Just a memory Grid, or a distributed Db: Machine Learning
+
+[.column]
+--
+Never used, I can't speak about that, really sorry :p
+--
+
+[.column]
+image::morethanjustamemorygrid/ml.png[role="pull-right",width="450"]
+
+[.columns]
+== More than Just a memory Grid, or a distributed Db: Data Streaming
+
+[.column]
+--
+* API to load large amount of Data
+* Lot of connectors provided
+--
+
+[.column]
+image::morethanjustamemorygrid/streamers.png[role="pull-right",width="300"]
+
+
+
+== More than Just a memory Grid, or a distributed Db: Messaging
+
+--
+* API to use Topics like in JMS
+* Can create Local or Remote listeners, with node selection
+* Messages can be ordered or not
+--
+
+
+
+== More than Just a memory Grid, or a distributed Db: Continuous Queries
+
+--
+* We can react to cache modifications
+* With an InitalQuery
+* Local or remote
+--
+
+
+== More than Just a memory Grid, or a distributed Db: Other possibilities
+
+--
+* Queues and Sets
+* Atomic Types
+* CountDownLatch
+* Semaphore
+* Sequence
+* Locks
+
+--
+== More than Just a memory Grid, or a distributed Db: Other possibilities
+
+--
+
+* REST API
+* And multiple thin client technologies
+ - .Net
+ - C++
+ - Php
+ - Python
+ - Node.js
+
+--
+
+
