@@ -96,7 +96,7 @@ Start it's own meetup's in paris, and some event in Toulon
 * icon:clock-o[] Deployments and Topology
 * icon:clock-o[] The dark sides
 * icon:clock-o[] My use cases
-* icon:clock-o[] Let's code !
+* icon:clock-o[] See it in action !
 
 
 -> Pay attention : one hour it's short !

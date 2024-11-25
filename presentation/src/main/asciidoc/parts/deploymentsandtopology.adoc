@@ -1,11 +1,95 @@
 
+[.columns]
 == Deployments and Topology
 
-Apache Ignite it's : ....
+[.column]
+--
+* Node types :
+- Server : host data, services, can execute computing
+- Server in client mode : services, can execute computing
+- Thin client : reduced functionalities
 
-* First : the open Source version of GridGain Product.
-
+[.column.is-one-quarter.has-text-right]
+--
+image::deploymentsandtopology/thinclients.png[role="pull-right",width="650"]
+--
+--
 [NOTE.speaker]
 --
-Gridgain is the company that made Ignite and gave it to Apache fondation in 2014
+xxx
+--
+
+[.columns]
+== Deployments and Topology
+
+[.column]
+--
+* Start a Server node :
+- Use the distribution and a Spring config xml
+- Use a docker Image with a Spring config xml
+
+[.column.is-one-quarter.has-text-right]
+--
+image::deploymentsandtopology/config.png[role="pull-right",width="650"]
+--
+--
+[NOTE.speaker]
+--
+xxx
+--
+
+== Deployments and Topology
+
+
+--
+* Start a Server node :
+- Embed in our own code, api is very simple to use.
+
+[source, subs="verbatim,quotes"]
+----
+IgniteConfiguration igniteCfg = new IgniteConfiguration();
+igniteCfg.setWorkDirectory("/path/to/work/directory");
+CacheConfiguration cacheCfg = new CacheConfiguration("myCache");
+cacheCfg.setCacheMode(CacheMode.PARTITIONED);
+igniteCfg.setCacheConfiguration(cacheCfg);
+
+Ignite server=Ignition.start(igniteCfg);
+----
+
+--
+[NOTE.speaker]
+--
+xxx
+--
+
+== Deployments and Topology
+
+--
+* The cluster : Server nodes, client node can discover the cluster
+- Using TCP static or Broadcast
+- Using JDBC
+- Using Zookeper
+- Using Cloud providers
+- Using Kubernetes
+- And more...
+
+--
+[NOTE.speaker]
+--
+xxx
+--
+
+== Deployments and Topology
+
+--
+* Last words
+- Backups and fault tolerance
+- Data rebalancing
+- Split brain
+-
+
+--
+[NOTE.speaker]
+--
+xxx
 --
