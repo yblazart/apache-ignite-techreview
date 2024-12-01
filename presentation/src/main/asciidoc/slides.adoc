@@ -92,8 +92,9 @@ Start it's own meetup's in paris, and some event in Toulon
 
 == Agenda
 
-* icon:clock-o[] It's more than just a Memory grid, or a distributed Db
+* icon:clock-o[] Origin
 * icon:clock-o[] Deployments and Topology
+* icon:clock-o[] It's more than just a Memory grid, or a distributed Db
 * icon:clock-o[] The dark sides
 * icon:clock-o[] My use cases
 * icon:clock-o[] See it in action !
@@ -111,6 +112,48 @@ Now some examples
 --
 
 
+== Origin
 
-include::parts/morethanjustamemorygrid.adoc[]
+Apache Ignite it's : ....
+
+* GridGain Product.
+- Has been donated to Apache foundation in 2014
+* New Apache Ignite 3 is in Beta (since 2 years)
+- But it's different from Apache 2. Both will continue to live
+
+[NOTE.speaker]
+--
+Gridgain is the company that made Ignite and gave it to Apache fondation in 2014
+--
+
+
 include::parts/deploymentsandtopology.adoc[]
+include::parts/morethanjustamemorygrid.adoc[]
+include::parts/thedarksides.adoc[]
+include::parts/myusecases.adoc[]
+
+
+
+[.columns]
+== See it in action !
+
+[.column]
+--
+LAB: Quarkus and Ignite
+
+* Presented in 2023 to
+- Riviera Dev
+- Devoxx Belgium
+- Devoxx Maroco
+--
+
+[.column]
+--
+image::quarkusignitelab-qr-code.png[role="pull-right",width="300"]
+https://github.com/SCIAM-FR/quarkus-ignite-lab
+--
+
+
+[NOTE.speaker]
+--
+--

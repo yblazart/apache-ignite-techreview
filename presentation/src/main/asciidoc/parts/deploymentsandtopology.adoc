@@ -1,4 +1,5 @@
 
+
 [.columns]
 == Deployments and Topology
 
@@ -82,11 +83,12 @@ xxx
 == Deployments and Topology
 
 --
-* Last words
+* Last words :
+- Nodes can have attributes
 - Backups and fault tolerance
 - Data rebalancing
 - Split brain
--
+
 
 --
 [NOTE.speaker]

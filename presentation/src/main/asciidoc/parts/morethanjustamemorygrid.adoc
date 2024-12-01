@@ -1,14 +1,4 @@
 
-== More than Just a memory Grid, or a distributed Db
-
-Apache Ignite it's : ....
-
-* First : the open Source version of GridGain Product.
-
-[NOTE.speaker]
---
-Gridgain is the company that made Ignite and gave it to Apache fondation in 2014
---
 
 [.columns]
 == More than Just a memory Grid, or a distributed Db: Distributed caches 1/2 (storage)

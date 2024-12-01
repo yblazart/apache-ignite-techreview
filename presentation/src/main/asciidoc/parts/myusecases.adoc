@@ -1,0 +1,36 @@
+
+== My Uses Cases : Big accounting files to check
+
+--
+* Big Json files (80GB) accounting checks
+* Unitary checks done while streaming data to cluster
+* Relational checks done using SQL Joins
+* Schema and indexes computed following BA check rules
+* Used a cluster of 4 Nodes with 120GB of OffHeap RAM each
+* Intial project (In Oracle) randomly succeed in 96H
+* Apache Ignite version succeed in 7 hours.
+
+
+--
+[NOTE.speaker]
+--
+xxx
+--
+
+== My Uses Cases : Micro Service Architecture support
+
+--
+* Used with Quarkus
+* Server Nodes dedicated
+* MS as Nodes in client mode (not Thin)
+* Use Queues to have loose couplings
+* Use Ignite Cluster Singleton Service for some services (FilePoller)
+* Use Ignite Compute to collect business Metrics
+* And some Near caches for some Referentials
+
+
+--
+[NOTE.speaker]
+--
+xxx
+--
