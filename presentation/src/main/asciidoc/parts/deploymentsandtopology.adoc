@@ -63,8 +63,10 @@ Ignite server=Ignition.start(igniteCfg);
 xxx
 --
 
+[.columns]
 == Deployments and Topology
 
+[.column]
 --
 * The cluster : Server nodes, client node can discover the cluster
 - Using TCP static or Broadcast
@@ -75,6 +77,12 @@ xxx
 - And more...
 
 --
+
+[.column]
+--
+image::igniteDiscovery.png[role="pull-right",width="300"]
+--
+
 [NOTE.speaker]
 --
 xxx

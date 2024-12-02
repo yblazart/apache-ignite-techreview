@@ -5,7 +5,7 @@
 * Transactions not working for Queues
 * CVE's
 * H2 version
-* I want to known how much off heap I consume, bur how ?
+* I want to known how much off heap I consume, but how ?
 * Monitoring
 * It's not fully magic
 * Difficult to esimate memory needs :

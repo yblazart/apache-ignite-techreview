@@ -59,8 +59,12 @@ yann.blazart@sciam.fr
 
 == And ....
 
+--
 -> Use Apache Ignite since 2018
 
+image::logo-apache-ignite.png[role="pull-right",width="500"]
+
+--
 [.columns]
 == Sciam
 
@@ -69,6 +73,10 @@ yann.blazart@sciam.fr
 * In tech, and in behavioral sciences
 * High level experts
 * People around Paris and Toulon
+* Contributors to :
+- Cucumber, Kafka
+- Quarkus, JavaFx for Quarkus
+- Spring AI, Microprofile AI (Smallrye-LLM)
 
 [.column]
 --
