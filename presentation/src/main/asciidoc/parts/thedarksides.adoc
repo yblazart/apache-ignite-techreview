@@ -7,14 +7,16 @@
 * H2 version
 * I want to known how much off heap I consume, but how ?
 * Monitoring
+* Backups cost
+* Data rebalancing
+* Split Brain....
+--
+
+== The Dark Sides
+
+--
 * It's not fully magic
-* Difficult to esimate memory needs :
+* Difficult to estimate memory needs :
 - documentation say it's 1.5 data size
-- but.... it depends
-
-
---
-[NOTE.speaker]
---
-xxx
+- but.... it depends (sql tables with index, structure costs)
 --

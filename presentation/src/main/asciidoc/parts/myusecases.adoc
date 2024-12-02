@@ -5,9 +5,9 @@
 * Big Json files (80GB) accounting checks
 * Unitary checks done while streaming data to cluster
 * Relational checks done using SQL Joins
-* Schema and indexes computed following BA check rules
+* Schema and indexes computed following BA's check rules
 * Used a cluster of 4 Nodes with 120GB of OffHeap RAM each
-* Intial project (In Oracle) randomly succeed in 96H
+* Intial project (In Oracle EXADATA) randomly succeed in 96H
 * Apache Ignite version succeed in 7 hours.
 
 

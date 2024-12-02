@@ -93,10 +93,36 @@ xxx
 --
 * Last words :
 - Nodes can have attributes
+- We can finely select Nodes (using cluster) on which we want to process
+
+[source, subs="verbatim,quotes"]
+----
+Ignite ignite = Ignition.start(new IgniteConfiguration().setUserAttributes(Map.of("ROLE", "worker")))
+IgniteCluster cluster = ignite.cluster();
+Collection<GridNode> nodes=cluster.forAttribute("ROLE", "worker").nodes();
+cluster.forPredicate((node) -> node.metrics().getCurrentCpuLoad() < 0.5);
+ClusterGroup localGroup = cluster.forLocal();
+ClusterGroup localGroup = cluster.forRemotes();
+ClusterGroup clientGroup = cluster.forClients();
+ClusterGroup serverGroup = cluster.forServers()
+// And more !!
+
+----
+
+--
+[NOTE.speaker]
+--
+xxx
+--
+
+
+== Deployments and Topology
+
+--
+* Last words :
 - Backups and fault tolerance
 - Data rebalancing
-- Split brain
-
+- Split brain -> Topology Validator
 
 --
 [NOTE.speaker]

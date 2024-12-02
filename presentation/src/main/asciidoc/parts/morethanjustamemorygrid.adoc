@@ -1,7 +1,7 @@
 
 
 [.columns]
-== More than Just a memory Grid, or a distributed Db: Distributed caches 1/2 (storage)
+== More than Just a memory Grid, or a distributed Db: Distributed caches (storage)
 
 [.column]
 * Like InfiniSpan, Hazelcast, Redis...
@@ -10,7 +10,6 @@
     - Pure Memory, off Heap or on Heap
     - Persisted to local file storage with WAL files
     - Persisted to RDMS or other
-* Data are stored in 'Binary' : you can change parts of object stored without change all object
 
 
 [.column.is-one-quarter.has-text-right]
@@ -25,6 +24,26 @@ Native storage : on overhead, store on file, read when it's needed, restarting i
 You can provide your own way to persist (API)
 Warning BinFormat : hierarchy with properties and same name
 --
+== More than Just a memory Grid, or a distributed Db: Distributed caches (storage)
+
+* Data are stored in 'Binary' :
+- Server do not need to know Pojo bytecode
+- You can avoid deserialization cost
+
+[source, subs="verbatim,quotes"]
+----
+Person person = new Person(1, "FirstPerson");
+ignite.cache("personCache").put(1, person);
+IgniteCache<Integer, BinaryObject> binaryCache = ignite.cache("personCache").withKeepBinary();
+BinaryObject binaryPerson = binaryCache.get(1);
+// ----
+BinaryObjectBuilder builder = ignite.binary().builder("org.apache.ignite.snippets.Person");
+builder.setField("id", 2L);
+builder.setField("name", "SecondPerson");
+binaryCache.put(2, builder.build());
+// ----
+BinaryObjectBuilder builder = binaryPerson.toBuilder();
+----
 
 
 == More than Just a memory Grid, or a distributed Db: Distributed caches 2/2 (distribution)
@@ -132,7 +151,8 @@ ignite.compute().affinityRun("City", newYorkId, new IgniteRunnable() {
 * Fine selection of Node where it will be executed
 * Map/Reduce API
 * LoadBalancing
-* Fault Tolerance
+- Weighted, Round-Robin, Random, Job Stealing
+* Fault Tolerance, (Automatic)
 * Scheduling (FIFO or Priority or JobStealing)
 * Collocating Job/Data
 --
@@ -140,7 +160,7 @@ ignite.compute().affinityRun("City", newYorkId, new IgniteRunnable() {
 
 
 [.columns]
-== More than Just a memory Grid, or a distributed Db: Service
+== More than Just a memory Grid, or a distributed Db: Services
 
 [.column]
 --
@@ -151,10 +171,14 @@ ignite.compute().affinityRun("City", newYorkId, new IgniteRunnable() {
 * Easy to use
 
 [source, subs="verbatim,quotes"]
-MyCounterService counterService = ignite
-  .services()
+----
+ignite.services().deployClusterSingleton("myCounterService",
+new MyCounterServiceImpl())
+// ----
+MyCounterService counterService = ignite.services()
   .serviceProxy("myCounterService",MyCounterService.class, false);
 counterService.increment();
+----
 --
 
 [.column]
@@ -177,6 +201,26 @@ image::morethanjustamemorygrid/ml.png[role="pull-right",width="450"]
 [.column]
 --
 * API to load large amount of Data
+
+[source, subs="verbatim,quotes"]
+----
+try (IgniteDataStreamer<Integer, String> stmr = ignite
+                               .dataStreamer("myCache")) {
+    for (int i = 0; i < 100000; i++)
+        stmr.addData(i, Integer.toString(i));
+}
+System.out.println(cache.get(99999));
+----
+--
+
+[.column]
+image::streamers.png[role="pull-right",width="500"]
+
+[.columns]
+== More than Just a memory Grid, or a distributed Db: Data Streaming
+
+[.column]
+--
 * Lot of connectors provided
 --
 
@@ -191,6 +235,22 @@ image::morethanjustamemorygrid/streamers.png[role="pull-right",width="300"]
 * API to use Topics like in JMS
 * Can create Local or Remote listeners, with node selection
 * Messages can be ordered or not
+
+[source, subs="verbatim,quotes"]
+----
+// Messaging instance over this cluster.
+IgniteMessaging msg = ignite.message();
+// Messaging instance over given cluster group (in this case, remote nodes).
+IgniteMessaging rmtMsg = ignite.message(ignite.cluster().forRemotes());
+// Add listener for ordered messages on all remote nodes.
+rmtMsg.remoteListen("MyOrderedTopic", (nodeId, msg) -> {
+    System.out.println("Received ordered message [msg=" + msg + ", from=" + nodeId + ']');
+    return true; // Return true to continue listening.
+});
+for (int i = 0; i < 10; i++)
+    rmtMsg.sendOrdered("MyOrderedTopic", Integer.toString(i),0);
+----
+
 --
 
 
@@ -199,8 +259,22 @@ image::morethanjustamemorygrid/streamers.png[role="pull-right",width="300"]
 
 --
 * We can react to cache modifications
-* With an InitalQuery
-* Local or remote
+* Can have an InitalQuery, MUST have Local listner, can have a remote filter
+
+[source, subs="verbatim,quotes"]
+----
+IgniteCache<Integer, String> cache = ignite.getOrCreateCache("myCache");
+ContinuousQuery<Integer, String> query = new ContinuousQuery<>();
+query.setInitialQuery(new ScanQuery<>((k, v) -> k > 10));
+//mandatory local listener
+query.setLocalListener(events -> {
+});
+try (QueryCursor<Cache.Entry<Integer, String>> cursor = cache.query(query)) {
+    // Iterating over the entries returned by the initial query
+    for (Cache.Entry<Integer, String> e : cursor)
+    System.out.println("key=" + e.getKey() + ", val=" + e.getValue());
+}
+----
 --
 
 
